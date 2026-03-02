@@ -67,33 +67,6 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative pt-16 overflow-hidden">
-      <Slider {...settings} className="hero-carousel">
-        {slides.map((slide) => (
-          <div key={slide.id} className="relative">
-            <div
-              className="h-96 sm:h-[500px] w-full relative flex items-center justify-center"
-              style={{ background: slide.image }}
-            >
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/40"></div>
-
-              {/* Content */}
-              <div className="relative z-10 text-center text-white px-4 max-w-2xl animate-fade-in">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-balance">
-                  {slide.title}
-                </h1>
-                <p className="text-lg sm:text-xl text-white/90 mb-8 text-balance">
-                  {slide.subtitle}
-                </p>
-                <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-white/90 transition-all duration-300 transform hover:scale-105">
-                  Descobrir Beleza
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </Slider>
-
       {/* Quick Stats */}
       <div className="bg-background border-b border-border py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
