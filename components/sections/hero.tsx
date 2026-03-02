@@ -1,6 +1,5 @@
 'use client';
 
-import Slider from 'react-slick';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ArrowProps {
