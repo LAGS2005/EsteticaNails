@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.0.0",
+    "@vercel/analytics": "^1.6.1",
     "embla-carousel-autoplay": "^8.0.0",
     "embla-carousel-react": "^8.0.0",
     "lucide-react": "^0.500.0",
