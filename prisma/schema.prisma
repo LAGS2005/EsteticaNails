@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente {
+  id         String       @id @default(uuid())
+  nome       String
+  email      String       @unique
+  telefone   String?
+  createdAt  DateTime     @default(now())
+  agendamentos Agendamento[]
+}
+
+model Profissional {
+  id         String       @id @default(uuid())
+  nome       String
+  especialidade String
+  email      String       @unique
+  telefone   String?
+  createdAt  DateTime     @default(now())
+  agendamentos Agendamento[]
+}
+
+model Servico {
+  id         String       @id @default(uuid())
+  nome       String
+  descricao  String?
+  duracaoMin Int
+  preco      Float
+  createdAt  DateTime     @default(now())
+  agendamentos AgendamentoServico[]
+}
+
+model Agendamento {
+  id           String       @id @default(uuid())
+  cliente      Cliente      @relation(fields: [clienteId], references: [id])
+  clienteId    String
+  profissional Profissional @relation(fields: [profissionalId], references: [id])
+  profissionalId String
+  dataHora     DateTime
+  status       AgendamentoStatus @default(PENDENTE)
+  createdAt    DateTime     @default(now())
+  servicos     AgendamentoServico[]
+  pagamento    Pagamento?
+}
+
+model AgendamentoServico {
+  id           String    @id @default(uuid())
+  agendamento  Agendamento @relation(fields: [agendamentoId], references: [id])
+  agendamentoId String
+  servico      Servico   @relation(fields: [servicoId], references: [id])
+  servicoId    String
+}
+
+model Pagamento {
+  id            String       @id @default(uuid())
+  agendamento   Agendamento  @relation(fields: [agendamentoId], references: [id])
+  agendamentoId String       @unique
+  valor         Float
+  metodo        MetodoPagamento
+  status        StatusPagamento @default(PENDENTE)
+  pagoEm        DateTime?
+  criadoEm      DateTime     @default(now())
+}
+
+enum AgendamentoStatus {
+  PENDENTE
+  CONFIRMADO
+  CANCELADO
+  FINALIZADO
+}
+
+enum MetodoPagamento {
+  DINHEIRO
+  CARTAO
+  PIX
+}
+
+enum StatusPagamento {
+  PENDENTE
+  PAGO
+  CANCELADO
+}
